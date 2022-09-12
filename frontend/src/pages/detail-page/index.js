@@ -1,8 +1,25 @@
-import React from 'react';
-import { Container, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Button, Modal, Form } from 'react-bootstrap';
 import { DetailCard } from '../../components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 const DetailPage = () => {
+	const [modalShow, setModalShow] = useState(false);
+	const handleClose = () => setModalShow(false);
+	const handleShow = () => setModalShow(true);
+	const navigate = useNavigate();
+
+	const modalSuccess = () => {
+		Swal.fire({
+			position: 'center',
+			icon: 'success',
+			title: 'Peminjaman Success',
+			showConfirmButton: false,
+			timer: 1300,
+		});
+	};
+
 	window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
 	return (
@@ -36,9 +53,69 @@ const DetailPage = () => {
 				</Container>
 			</div>
 			<Container flex="sm" className="detail-pinjam">
-				<Button variant="warning" className="btn-orange detail-pinjam-btn">
+				<Button
+					variant="warning"
+					className="btn-orange detail-pinjam-btn"
+					onClick={() => handleShow()}
+				>
 					PINJAM RUANGAN
 				</Button>
+
+				<Modal show={modalShow} onHide={handleClose} centered>
+					<Modal.Header closeButton>
+						<Modal.Title>Form Peminjaman Ruang</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Form>
+							<Form.Group
+								className="mb-3"
+								controlId="exampleForm.ControlInput1"
+							>
+								<Form.Label>Name</Form.Label>
+								<Form.Control type="text" placeholder="Great Day HR" />
+							</Form.Group>
+							<Form.Group
+								className="mb-3"
+								controlId="exampleForm.ControlInput1"
+							>
+								<Form.Label>Date</Form.Label>
+								<Form.Control type="date" placeholder="yyyy-mm-dd" />
+							</Form.Group>
+							<Form.Group
+								className="mb-3"
+								controlId="exampleForm.ControlInput1"
+							>
+								<Form.Label>Waktu Mulai</Form.Label>
+								<Form.Control type="time" placeholder="hh:mm" />
+								<Form.Label>Waktu Selesai</Form.Label>
+								<Form.Control type="time" placeholder="hh:mm" />
+							</Form.Group>
+							<Form.Group
+								className="mb-3"
+								controlId="exampleForm.ControlTextarea1"
+							>
+								<Form.Label>Keterangan</Form.Label>
+								<Form.Control as="textarea" rows={3} />
+							</Form.Group>
+						</Form>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="dark" className="btn-black" onClick={handleClose}>
+							Close
+						</Button>
+						<Button
+							variant="warning"
+							className="btn-orange"
+							onClick={() => {
+								handleClose();
+								modalSuccess();
+								setTimeout(() => navigate('/'), 1300);
+							}}
+						>
+							Pinjam
+						</Button>
+					</Modal.Footer>
+				</Modal>
 			</Container>
 		</>
 	);

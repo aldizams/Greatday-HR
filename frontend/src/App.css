@@ -107,7 +107,7 @@
 
 .ruang-card {
 	width: 550px;
-	height: 450px;
+	height: 500px;
 	background-color: #ec8013;
 	display: flex;
 	justify-content: center;
@@ -125,7 +125,7 @@
 	border-radius: 20px;
 }
 .card-title {
-	font-size: 20px;
+	font-size: 25px;
 	color: white;
 	margin-top: 10px;
 }
